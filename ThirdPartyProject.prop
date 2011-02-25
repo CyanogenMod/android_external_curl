@@ -1,0 +1,9 @@
+# Copyright (C) 2010 The Android Open Source Project
+# ThirdPartyProject.prop - data for tracking and maintaining third party projects
+
+# Library properties
+name=curl
+version=7.20.1
+homepage=http://curl.haxx.se/
+onDevice=false
+isNative=true
