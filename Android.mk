@@ -82,7 +82,8 @@ ALL_PREBUILT += $(LOCAL_PATH)/NOTICE
 $(LOCAL_PATH)/NOTICE: $(LOCAL_PATH)/COPYING | $(ACP)
 	$(copy-file-to-target)
 
-include $(BUILD_STATIC_LIBRARY)
+LOCAL_PRELINK_MODULE := false
+include $(BUILD_SHARED_LIBRARY)
 
 
 #########################
@@ -93,7 +94,7 @@ include $(LOCAL_PATH)/src/Makefile.inc
 LOCAL_SRC_FILES := $(addprefix src/,$(CURL_CFILES))
 
 LOCAL_MODULE := curl
-LOCAL_STATIC_LIBRARIES := libcurl
+LOCAL_SHARED_LIBRARIES := libcurl
 LOCAL_SYSTEM_SHARED_LIBRARIES := libc
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/include $(LOCAL_PATH)/lib
