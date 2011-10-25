@@ -80,9 +80,9 @@ LOCAL_MODULE_TAGS := optional
 # Actually, this doesn't quite work because the build system searches
 # for NOTICE files before it gets to this point, so it will only be seen
 # on subsequent builds.
-ALL_PREBUILT += $(LOCAL_PATH)/NOTICE
-$(LOCAL_PATH)/NOTICE: $(LOCAL_PATH)/COPYING | $(ACP)
-	$(copy-file-to-target)
+#ALL_PREBUILT += $(LOCAL_PATH)/NOTICE
+#$(LOCAL_PATH)/NOTICE: $(LOCAL_PATH)/COPYING | $(ACP)
+#	$(copy-file-to-target)
 
 LOCAL_PRELINK_MODULE := false
 include $(BUILD_SHARED_LIBRARY)
