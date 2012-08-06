@@ -7,7 +7,7 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 1998 - 2009, Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 1998 - 2010, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
@@ -47,11 +47,10 @@ long Curl_timeleft(struct connectdata *conn,
  * Used to extract socket and connectdata struct for the most recent
  * transfer on the given SessionHandle.
  *
- * The socket 'long' will be -1 in case of failure!
+ * The returned socket will be CURL_SOCKET_BAD in case of failure!
  */
-CURLcode Curl_getconnectinfo(struct SessionHandle *data,
-                             long *param_longp,
-                             struct connectdata **connp);
+curl_socket_t Curl_getconnectinfo(struct SessionHandle *data,
+                                  struct connectdata **connp);
 
 #ifdef WIN32
 /* When you run a program that uses the Windows Sockets API, you may
@@ -67,5 +66,7 @@ void Curl_sndbufset(curl_socket_t sockfd);
 #else
 #define Curl_sndbufset(y)
 #endif
+
+void Curl_updateconninfo(struct connectdata *conn, curl_socket_t sockfd);
 
 #endif

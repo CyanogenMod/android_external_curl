@@ -78,7 +78,9 @@
 #if defined(CURLRES_SYNCH) && \
     defined(HAVE_ALARM) && defined(SIGALRM) && defined(HAVE_SIGSETJMP)
 /* alarm-based timeouts can only be used with all the dependencies satisfied */
-#define USE_ALARM_TIMEOUT
+// Disable this timeout, as there are a *lot* of crashes that seem to happen in
+// this code on Mac, but not on Windows
+// #define USE_ALARM_TIMEOUT
 #endif
 
 /*
@@ -719,5 +721,3 @@ struct curl_hash *Curl_mk_dnscache(void)
 {
   return Curl_hash_alloc(7, Curl_hash_str, Curl_str_key_compare, freednsentry);
 }
-
-
