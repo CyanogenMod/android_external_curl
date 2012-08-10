@@ -43,7 +43,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".;..\include;&quot;..\..\openssl-0.9.8h\Win32\include&quot;;&quot;..\..\zlib-1.2.3&quot;"
+				AdditionalIncludeDirectories=".;..\include;..\..\openssl\Win32\include;..\..\zlib"
 				PreprocessorDefinitions="WIN32;_DEBUG;BUILDING_LIBCURL;CURL_STATICLIB;CURL_DISABLE_LDAP;USE_SSLEAY;USE_OPENSSL;HAVE_ZLIB_H"
 				MinimalRebuild="true"
 				RuntimeLibrary="3"
@@ -114,7 +114,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories=".;..\include;&quot;..\..\openssl-0.9.8h\Win32\include&quot;;&quot;..\..\zlib-1.2.3&quot;"
+				AdditionalIncludeDirectories=".;..\include;..\..\openssl\Win32\include;..\..\zlib"
 				PreprocessorDefinitions="WIN32;NDEBUG;BUILDING_LIBCURL;CURL_STATICLIB;CURL_DISABLE_LDAP;USE_SSLEAY;USE_OPENSSL;HAVE_ZLIB_H"
 				StringPooling="true"
 				RuntimeLibrary="2"
