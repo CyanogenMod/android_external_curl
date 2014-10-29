@@ -66,6 +66,7 @@ CURL_HEADERS := \
 
 LOCAL_SRC_FILES := $(addprefix lib/,$(CSOURCES))
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/include/
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/lib/
 LOCAL_C_INCLUDES += external/openssl/include
 LOCAL_C_INCLUDES += external/zlib
 LOCAL_CFLAGS += $(common_CFLAGS)

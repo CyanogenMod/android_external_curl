@@ -320,7 +320,9 @@
 #define HAVE_INTTYPES_H 1
 
 /* Define to 1 if you have the ioctl function. */
+#ifndef HAVE_IOCTL
 #define HAVE_IOCTL 1
+#endif
 
 /* Define to 1 if you have the ioctlsocket function. */
 /* #undef HAVE_IOCTLSOCKET */
@@ -435,7 +437,9 @@
 #define HAVE_LONGLONG 1
 
 /* Define to 1 if you have the malloc.h header file. */
+#ifndef HAVE_MALLOC_H
 #define HAVE_MALLOC_H 1
+#endif
 
 /* Define to 1 if you have the memory.h header file. */
 #define HAVE_MEMORY_H 1

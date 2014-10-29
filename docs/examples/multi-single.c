@@ -1,13 +1,25 @@
-/*****************************************************************************
+/***************************************************************************
  *                                  _   _ ____  _
  *  Project                     ___| | | |  _ \| |
  *                             / __| | | | |_) | |
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
+ * Copyright (C) 1998 - 2011, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
- * This is a very simple example using the multi interface.
- */
+ * This software is licensed as described in the file COPYING, which
+ * you should have received as part of this distribution. The terms
+ * are also available at http://curl.haxx.se/docs/copyright.html.
+ *
+ * You may opt to use, copy, modify, merge, publish, distribute and/or sell
+ * copies of the Software, and permit persons to whom the Software is
+ * furnished to do so, under the terms of the COPYING file.
+ *
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
+ * KIND, either express or implied.
+ *
+ ***************************************************************************/
+/* This is a very simple example using the multi interface. */
 
 #include <stdio.h>
 #include <string.h>
@@ -22,12 +34,14 @@
 /*
  * Simply download a HTTP file.
  */
-int main(int argc, char **argv)
+int main(void)
 {
   CURL *http_handle;
   CURLM *multi_handle;
 
   int still_running; /* keep number of running handles */
+
+  curl_global_init(CURL_GLOBAL_DEFAULT);
 
   http_handle = curl_easy_init();
 
@@ -43,7 +57,7 @@ int main(int argc, char **argv)
   /* we start some action by calling perform right away */
   curl_multi_perform(multi_handle, &still_running);
 
-  while(still_running) {
+  do {
     struct timeval timeout;
     int rc; /* select() return code */
 
@@ -94,11 +108,15 @@ int main(int argc, char **argv)
       curl_multi_perform(multi_handle, &still_running);
       break;
     }
-  }
+  } while(still_running);
+
+  curl_multi_remove_handle(multi_handle, http_handle);
+
+  curl_easy_cleanup(http_handle);
 
   curl_multi_cleanup(multi_handle);
 
-  curl_easy_cleanup(http_handle);
+  curl_global_cleanup();
 
   return 0;
 }
