@@ -1,51 +1,76 @@
-Curl and libcurl 7.21.3
+﻿Curl and libcurl 7.39.0
 
- Public curl releases:         119
- Command line options:         143
- curl_easy_setopt() options:   185
+ Public curl releases:         142
+ Command line options:         162
+ curl_easy_setopt() options:   208
  Public functions in libcurl:  58
- Known libcurl bindings:       39
- Contributors:                 827
+ Contributors:                 1216
 
 This release includes the following changes:
 
- o Added --noconfigure switch to testcurl.pl
- o Added --xattr option
- o Added CURLOPT_RESOLVE and --resolve
- o Added CURLAUTH_ONLY
- o Added version-check.pl to the examples dir
+ o CURLOPT_COOKIELIST: Added "RELOAD" command [5]
+ o build: Added WinIDN build configuration options to Visual Studio projects
+ o ssh: improve key file search
+ o SSL: public key pinning. Use CURLOPT_PINNEDPUBLICKEY and --pinnedpubkey
+ o vtls: remove QsoSSL support, use gskit!
+ o mk-ca-bundle: added SHA-384 signature algorithm
+ o docs: added many examples for libcurl opts and other doc improvements
+ o build: Added VC ssh2 target to main Makefile
+ o MinGW: Added support to build with nghttp2
+ o NetWare: Added support to build with nghttp2
+ o build: added Watcom support to build with WinSSL
 
 This release includes the following bugfixes:
 
- o check for libcurl features for some command line options
- o Curl_setopt: disallow CURLOPT_USE_SSL without SSL support
- o http_chunks: remove debug output
- o URL-parsing: consider ? a divider
- o SSH: avoid using the libssh2_ prefix
- o SSH: use libssh2_session_handshake() to work on win64
- o ftp: prevent server from hanging on closed data connection when stopping
-   a transfer before the end of the full transfer (ranges)
- o LDAP: detect non-binary attributes properly
- o ftp: treat server's response 421 as CURLE_OPERATION_TIMEDOUT
- o gnutls->handshake: improved timeout handling
- o security: Pass the right parameter to init
- o krb5: Use GSS_ERROR to check for error
- o TFTP: resend the correct data
- o configure: fix autoconf 2.68 warning: no AC_LANG_SOURCE call detected
- o GnuTLS: now detects socket errors on Windows
- o symbols-in-versions: updated en masse
- o added a couple examples that were missing from the tar ball
- o Curl_send/recv_plain: return errno on failure
- o Curl_wait_for_resolv (for c-ares): correct timeout
- o ossl_connect_common: detect connection re-use
- o configure: Prevent link errors with --librtmp
- o openldap: use remote port in URL passed to ldap_init_fd()
- o url: provide dead_connection flag in Curl_handler::disconnect
- o lots of compiler warning fixes
- o ssh: fix a download resume point calculation
- o fix getinfo CURLINFO_LOCAL* for reused connections
- o multi: the returned running handles conuter could turn negative
- o multi: only ever consider pipelining for connections doing HTTP(S)
+ o openssl: build fix for versions < 0.9.8e [1]
+ o newlines: fix mixed newlines to LF-only [2]
+ o ntlm: Fixed HTTP proxy authentication when using Windows SSPI [3]
+ o sasl_sspi: Fixed Unicode build [4]
+ o file: reject paths using embedded %00
+ o threaded-resolver: revert Curl_expire_latest() switch [6]
+ o configure: allow --with-ca-path with PolarSSL too
+ o HTTP/2: Fix busy loop when EOF is encountered
+ o CURLOPT_CAPATH: return failure if set without backend support
+ o nss: do not fail if a CRL is already cached
+ o smtp: Fixed intermittent "SSL3_WRITE_PENDING: bad write retry" error
+ o fixed 20+ nits/memory leaks identified by Coverity scans
+ o curl_schannel.c: Fixed possible memory or handle leak
+ o multi-uv.c: call curl_multi_info_read() better
+ o Cmake: Check for OpenSSL before OpenLDAP
+ o Cmake: Fix library list provided to cURL tests
+ o Cmake: Avoid cycle directory dependencies
+ o Cmake: Build with GSSAPI (MIT or Heimdal)
+ o vtls: provide backend defines for internal source code
+ o nss: fix a connection failure when FTPS handle is reused
+ o tests/http_pipe.py: Python 3 support
+ o cmake: build tool_hugehelp (ENABLE_MANUAL)
+ o cmake: enable IPv6 by default if available
+ o tests: move TESTCASES to Makefile.inc, add show for cmake
+ o ntlm: Avoid unnecessary buffer allocation for SSPI based type-2 token
+ o ntlm: Fixed empty/bad base-64 decoded buffer return codes
+ o ntlm: Fixed empty type-2 decoded message info text
+ o cmake: add CMake/Macros.cmake to the release tarball
+ o cmake: add SUPPORT_FEATURES and SUPPORT_PROTOCOLS
+ o cmake: use LIBCURL_VERSION from curlver.h
+ o cmake: generate pkg-config and curl-config
+ o fixed several superfluous variable assignements identified by cppcheck
+ o cleanup of 'CURLcode result' return code
+ o pipelining: only output "is not blacklisted" in debug builds
+ o SSL: Remove SSLv3 from SSL default due to POODLE attack
+ o gskit.c: remove SSLv3 from SSL default
+ o darwinssl: detect possible future removal of SSLv3 from the framework
+ o ntlm: Only define ntlm data structure when USE_NTLM is defined
+ o ntlm: Return CURLcode from Curl_ntlm_core_mk_lm_hash()
+ o ntlm: Return all errors from Curl_ntlm_core_mk_nt_hash()
+ o sspi: Only call CompleteAuthToken() when complete is needed
+ o http_negotiate: Fixed missing check for USE_SPNEGO
+ o HTTP: return larger than 3 digit response codes too [7]
+ o openssl: Check for NPN / ALPN via OpenSSL version number
+ o openssl: enable NPN separately from ALPN
+ o sasl_sspi: Allow DIGEST-MD5 to use current windows credentials
+ o sspi: Return CURLE_LOGIN_DENIED on AcquireCredentialsHandle() failure
+ o resume: consider a resume from [content-length] to be OK [8]
+ o sasl: Fixed Kerberos V5 inclusion when CURL_DISABLE_CRYPTO_AUTH is used
 
 This release includes the following known bugs:
 
@@ -54,8 +79,23 @@ This release includes the following known bugs:
 This release would not have looked like this without help, code, reports and
 advice from friends like these:
 
- Dan Fandrich, Guenter Knauf, Pat Ray, Hongli Lai, Kamil Dudka,
- Stefan Tomanek, Alfred Gebert, Yang Tse, Julien Chaffraix, Adam Light,
- Rutger Hofman, Matthias Bolte, Heinrich Ko, Dmitri Shubin
+  Askar Safin, Balaji Salunke, Bill Nagel, Bruno Thomsen, Catalin Patulea,
+  Dan Fandrich, Daniel Stenberg, Dimitar Boevski, Fabian Keil, Guenter Knauf,
+  Hugo Lopez, Jakub Zakrzewski, Jeremy Lin, Jonathan Cardoso Machado,
+  Kamil Dudka, Luan Cestari, Lucas Pardue, Marcel Raad, Marc Hoersken,
+  Michael Wallner, Nick Zitzmann, Patrick Monnerat, Paul Howarth, Peter Wu,
+  Ray Satiro, Steve Holme, Tatsuhiro Tsujikawa, Ulrich Telle, Viktor Szakáts,
+  Waldek Kozba, Yousuke Kimoto,
 
         Thanks! (and sorry if I forgot to mention someone)
+
+References to bug reports and discussions on issues:
+
+ [1] = http://curl.haxx.se/mail/lib-2014-09/0064.html
+ [2] = http://curl.haxx.se/mail/lib-2014-09/0075.html
+ [3] = http://curl.haxx.se/mail/lib-2014-08/0273.html
+ [4] = http://curl.haxx.se/bug/view.cgi?id=1422
+ [5] = http://curl.haxx.se/libcurl/c/CURLOPT_COOKIELIST.html
+ [6] = http://curl.haxx.se/bug/view.cgi?id=1426
+ [7] = http://curl.haxx.se/bug/view.cgi?id=1441
+ [8] = http://curl.haxx.se/bug/view.cgi?id=1443
