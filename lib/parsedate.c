@@ -491,13 +491,11 @@ static int parsedate(const char *date, time_t *output)
     /* lacks vital info, fail */
     return PARSEDATE_FAIL;
 
-#if SIZEOF_TIME_T < 5
   /* 32 bit time_t can only hold dates to the beginning of 2038 */
-  if(yearnum > 2037) {
+  if(sizeof(time_t) < 5 && yearnum > 2037) {
     *output = 0x7fffffff;
     return PARSEDATE_LATER;
   }
-#endif
 
   if(yearnum < 1970) {
     *output = 0;

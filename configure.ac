@@ -174,14 +174,6 @@ dnl
 INITIAL_LDFLAGS=$LDFLAGS
 INITIAL_LIBS=$LIBS
 
-dnl
-dnl Detect the canonical host and target build environment
-dnl
-
-AC_CANONICAL_HOST
-dnl Get system canonical name
-AC_DEFINE_UNQUOTED(OS, "${host}", [cpu-machine-OS])
-
 dnl Checks for programs.
 
 dnl Our curl_off_t internal and external configure settings
@@ -2966,12 +2958,6 @@ AC_HEADER_TIME
 CURL_CHECK_STRUCT_TIMEVAL
 CURL_VERIFY_RUNTIMELIBS
 
-AC_CHECK_SIZEOF(size_t)
-AC_CHECK_SIZEOF(long)
-AC_CHECK_SIZEOF(int)
-AC_CHECK_SIZEOF(short)
-CURL_CONFIGURE_LONG
-AC_CHECK_SIZEOF(time_t)
 AC_CHECK_SIZEOF(off_t)
 
 soname_bump=no
