@@ -1498,7 +1498,7 @@ if test "$curl_ssl_msg" = "$init_ssl_msg" && test X"$OPT_SSL" != Xno; then
      ],[
      LDFLAGS="$CLEANLDFLAGS -L$LIB_OPENSSL"
      CPPFLAGS="$CLEANCPPFLAGS -I$PREFIX_OPENSSL/include/openssl -I$PREFIX_OPENSSL/include"
-     AC_CHECK_LIB(crypto, CRYPTO_add_lock,[
+     AC_CHECK_LIB(crypto, HMAC_Init,[
        HAVECRYPTO="yes"
        LIBS="-lcrypto $LIBS"], [
        LDFLAGS="$CLEANLDFLAGS"
@@ -1591,14 +1591,22 @@ if test "$curl_ssl_msg" = "$init_ssl_msg" && test X"$OPT_SSL" != Xno; then
                     DES_set_odd_parity )
 
     AC_MSG_CHECKING([for BoringSSL])
-    if test "x$ac_cv_func_DES_set_odd_parity" != "xyes"; then
-      curl_ssl_msg="enabled (BoringSSL)"
+    AC_COMPILE_IFELSE([
+      AC_LANG_PROGRAM([[
+#include <openssl/base.h>
+      ]],[[
+#ifndef OPENSSL_IS_BORINGSSL
+#error not boringssl
+#endif
+      ]])
+    ],[
+      AC_MSG_RESULT([yes])
       AC_DEFINE_UNQUOTED(HAVE_BORINGSSL, 1,
         [Define to 1 if using BoringSSL.])
-      AC_MSG_RESULT([yes])
-    else
+    ],[
       AC_MSG_RESULT([no])
-    fi
+    ])
+
     AC_MSG_CHECKING([for libressl])
     AC_COMPILE_IFELSE([
       AC_LANG_PROGRAM([[
