@@ -393,33 +393,6 @@
 #endif
 
 /*
- * Default sizeof(off_t) in case it hasn't been defined in config file.
- */
-
-#ifndef SIZEOF_OFF_T
-#  if defined(__VMS) && !defined(__VAX)
-#    if defined(_LARGEFILE)
-#      define SIZEOF_OFF_T 8
-#    endif
-#  elif defined(__OS400__) && defined(__ILEC400__)
-#    if defined(_LARGE_FILES)
-#      define SIZEOF_OFF_T 8
-#    endif
-#  elif defined(__MVS__) && defined(__IBMC__)
-#    if defined(_LP64) || defined(_LARGE_FILES)
-#      define SIZEOF_OFF_T 8
-#    endif
-#  elif defined(__370__) && defined(__IBMC__)
-#    if defined(_LP64) || defined(_LARGE_FILES)
-#      define SIZEOF_OFF_T 8
-#    endif
-#  endif
-#  ifndef SIZEOF_OFF_T
-#    define SIZEOF_OFF_T 4
-#  endif
-#endif
-
-/*
  * Arg 2 type for gethostname in case it hasn't been defined in config file.
  */
 
@@ -595,11 +568,6 @@ int netware_init(void);
 /* The lib was present and the tld.h header (which is missing in libidn 0.3.X
    but we only work with libidn 0.4.1 or later) */
 #define USE_LIBIDN
-#endif
-
-#ifndef SIZEOF_TIME_T
-/* assume default size of time_t to be 32 bit */
-#define SIZEOF_TIME_T 4
 #endif
 
 #define LIBIDN_REQUIRED_VERSION "0.4.1"

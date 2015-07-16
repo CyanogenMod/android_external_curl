@@ -75,11 +75,6 @@
  * Verify that some macros are actually defined.
  */
 
-#ifndef CURL_SIZEOF_LONG
-#  error "CURL_SIZEOF_LONG definition is missing!"
-   Error Compilation_aborted_CURL_SIZEOF_LONG_is_missing
-#endif
-
 #ifndef CURL_TYPEOF_CURL_SOCKLEN_T
 #  error "CURL_TYPEOF_CURL_SOCKLEN_T definition is missing!"
    Error Compilation_aborted_CURL_TYPEOF_CURL_SOCKLEN_T_is_missing
@@ -132,15 +127,6 @@
 #define CurlchkszEQ(t, s) sizeof(t) == s ? 1 : -1
 
 #define CurlchkszGE(t1, t2) sizeof(t1) >= sizeof(t2) ? 1 : -1
-
-/*
- * Verify that the size previously defined and expected for long
- * is the same as the one reported by sizeof() at compile time.
- */
-
-typedef char
-  __curl_rule_01__
-    [CurlchkszEQ(long, CURL_SIZEOF_LONG)];
 
 /*
  * Verify that the size previously defined and expected for
