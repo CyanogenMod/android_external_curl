@@ -18,9 +18,7 @@ curl_CFLAGS := -Wpointer-arith -Wwrite-strings -Wunused -Winline \
 
 curl_includes := \
 	$(LOCAL_PATH)/include/ \
-	$(LOCAL_PATH)/lib \
-	external/boringssl/include \
-	external/zlib/src
+	$(LOCAL_PATH)/lib
 
 #########################
 # Build the libcurl static library
@@ -31,9 +29,11 @@ include $(LOCAL_PATH)/lib/Makefile.inc
 LOCAL_SRC_FILES := $(addprefix lib/,$(CSOURCES))
 LOCAL_C_INCLUDES := $(curl_includes)
 LOCAL_CFLAGS := $(curl_CFLAGS)
+LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include
 
 LOCAL_MODULE:= libcurl
 LOCAL_MODULE_TAGS := optional
+LOCAL_STATIC_LIBRARIES := libcrypto_static libz
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -46,6 +46,7 @@ include $(LOCAL_PATH)/lib/Makefile.inc
 LOCAL_SRC_FILES := $(addprefix lib/,$(CSOURCES))
 LOCAL_C_INCLUDES := $(curl_includes)
 LOCAL_CFLAGS := $(curl_CFLAGS)
+LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include
 
 LOCAL_MODULE:= libcurl
 LOCAL_MODULE_TAGS := optional
@@ -64,7 +65,6 @@ LOCAL_MODULE := curl
 LOCAL_MODULE_TAGS := optional
 LOCAL_STATIC_LIBRARIES := libcurl
 LOCAL_SHARED_LIBRARIES := libcrypto libssl libz
-
 
 LOCAL_C_INCLUDES := $(curl_includes)
 
