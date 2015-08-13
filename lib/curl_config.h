@@ -5,7 +5,7 @@
 /* #undef CURL_CA_BUNDLE */
 
 /* Location of default ca path */
-/* #undef CURL_CA_PATH */
+#define CURL_CA_PATH "/system/etc/security/cacerts"
 
 /* to disable cookies support */
 /* #undef CURL_DISABLE_COOKIES */
