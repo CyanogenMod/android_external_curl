@@ -125,7 +125,10 @@
 #define HAVE_BORINGSSL 1
 
 /* Define to 1 if you have the clock_gettime function and monotonic timer. */
+#ifndef __APPLE__
+/* CLOCK_MONOTONIC is not defined in mac when building for the host. */
 #define HAVE_CLOCK_GETTIME_MONOTONIC 1
+#endif
 
 /* Define to 1 if you have the closesocket function. */
 /* #undef HAVE_CLOSESOCKET */
@@ -435,10 +438,14 @@
 #define HAVE_MEMORY_H 1
 
 /* Define to 1 if you have the memrchr function or macro. */
+#ifndef __APPLE__
 #define HAVE_MEMRCHR 1
+#endif
 
 /* Define to 1 if you have the MSG_NOSIGNAL flag. */
+#ifndef __APPLE__
 #define HAVE_MSG_NOSIGNAL 1
+#endif
 
 /* Define to 1 if you have the <netdb.h> header file. */
 #define HAVE_NETDB_H 1
@@ -839,7 +846,7 @@
 #define RETSIGTYPE void
 
 /* Define to the type qualifier of arg 5 for select. */
-#define SELECT_QUAL_ARG5 
+#define SELECT_QUAL_ARG5
 
 /* Define to the type of arg 1 for select. */
 #define SELECT_TYPE_ARG1 int

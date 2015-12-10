@@ -79,7 +79,6 @@ Example set of cookies:
     13-Jun-1988 03:04:55 GMT; domain=.fidelity.com; path=/; secure
 ****/
 
-
 #include "curl_setup.h"
 
 #if !defined(CURL_DISABLE_HTTP) && !defined(CURL_DISABLE_COOKIES)
