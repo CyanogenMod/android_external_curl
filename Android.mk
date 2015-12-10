@@ -40,6 +40,24 @@ include $(BUILD_STATIC_LIBRARY)
 #########################
 # Build the libcurl shared library
 
+libcurl_shared_libs := libcrypto libssl libz
+
+include $(CLEAR_VARS)
+include $(LOCAL_PATH)/lib/Makefile.inc
+
+LOCAL_SRC_FILES := $(addprefix lib/,$(CSOURCES))
+LOCAL_C_INCLUDES := $(curl_includes)
+LOCAL_CFLAGS := \
+    $(curl_CFLAGS) \
+    -D_GNU_SOURCE=1
+LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include
+
+LOCAL_MODULE:= libcurl-host
+LOCAL_MODULE_TAGS := optional
+LOCAL_SHARED_LIBRARIES := $(libcurl_shared_libs:=-host)
+
+include $(BUILD_HOST_SHARED_LIBRARY)
+
 include $(CLEAR_VARS)
 include $(LOCAL_PATH)/lib/Makefile.inc
 
@@ -50,7 +68,7 @@ LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include
 
 LOCAL_MODULE:= libcurl
 LOCAL_MODULE_TAGS := optional
-LOCAL_SHARED_LIBRARIES := libcrypto libssl libz
+LOCAL_SHARED_LIBRARIES := $(libcurl_shared_libs)
 
 include $(BUILD_SHARED_LIBRARY)
 

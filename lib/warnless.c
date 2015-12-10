@@ -22,6 +22,7 @@
 
 #include "curl_setup.h"
 #include "stdint.h"
+#include "limits.h"
 
 #if defined(__INTEL_COMPILER) && defined(__unix__)
 
