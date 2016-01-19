@@ -12,9 +12,9 @@ version_string := "Android $(PLATFORM_VERSION) $(TARGET_ARCH_VARIANT)"
 
 curl_CFLAGS := -Wpointer-arith -Wwrite-strings -Wunused -Winline \
 	-Wnested-externs -Wmissing-declarations -Wmissing-prototypes -Wno-long-long \
-	-Wfloat-equal -Wno-multichar -Wsign-compare -Wno-format-nonliteral \
+	-Wfloat-equal -Wno-multichar -Wno-sign-compare -Wno-format-nonliteral \
 	-Wendif-labels -Wstrict-prototypes -Wdeclaration-after-statement \
-	-Wno-system-headers -DHAVE_CONFIG_H -DOS='$(version_string)'
+	-Wno-system-headers -DHAVE_CONFIG_H -DOS='$(version_string)' -Werror
 
 curl_includes := \
 	$(LOCAL_PATH)/include/ \
